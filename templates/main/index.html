@@ -1,5 +1,6 @@
 {%extends 'base.html'%}
 {%block content%}
+{% load product_tags %}
 {%load static%}
 <div class="slider-area">
     <div class="swiper-container slider__active">
@@ -171,14 +172,14 @@
                                     <span>(01 review)</span>
                                 </div>
                                 <div class="price mb-10">
-                                    <span>₹&nbsp;{{i.price}}</span>
+                                    <span>₹&nbsp;{% call_sellprise i.price i.discount %}</span>&nbsp;&nbsp;<del>{{i.price}}</del>
                                 </div>
-                                <div class="progress mb-5">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 10%"
+                                <!-- <div class="progress mb-5">
+                                    <div class="progress-bar bg-danger" role="progressbar" style=" width: {% progress_bar i.total_quantity i.availablity  %}"
                                         aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
+                                </div> -->
                                 <div class="progress-rate">
-                                    <span>Sold:312/1225</span>
+                                    <span>Sold:{{i.availablity}}/{{i.total_quantity}}</span>
                                 </div>
                             </div>
                             <div class="product__add-cart text-center">
