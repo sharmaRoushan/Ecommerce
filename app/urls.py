@@ -8,4 +8,5 @@ urlpatterns = [
     path('base',views.base,name='base'),
     path('',views.index,name='index'),
     path('singhup',views.singhup,name='singhup'),
+    path('product/<slug:slug>',views.single_product,name='product_detail')
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

@@ -25,4 +25,5 @@ def index(request):
     # print(context)
     return render(request,'main/index.html',context)
 
-# Create your views here.
+def single_product(request,slug):
+    return render(request,'product/product_detail.html')
