@@ -51,15 +51,19 @@ def register(request):
         email=request.POST['email']
         password=request.POST['password']
         # print(username,email,password)
+        if User.objects.filter(username=username).exists():
+            message=messages.error(request,'username is already exists')
+            return redirect('login')
+        if User.objects.filter(email=email).exists():
+            message=messages.error(request,'email is already exists')
+            return redirect('login')
         user=User(
             username=username,
             email=email,
-            password=password
         )
         user.set_password(password)
         user.save()
-
-    return redirect('account')
+    return redirect('login')
 
 def login_page(request):
     if request.method=="POST":
@@ -71,7 +75,5 @@ def login_page(request):
             return redirect('index')
         else:
             message=messages.error(request,'Email and Password are invalid')
-            return redirect('account')
-
-        
-    return redirect('account')
+            return redirect('login')   
+    return redirect('login')
