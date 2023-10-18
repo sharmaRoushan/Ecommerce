@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Duka Market - Clean, Minimal E-commerce HTML5 Template</title>
+    <title>E-commerce</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Place favicon.ico in the root directory -->
@@ -26,6 +26,8 @@
     <link rel="stylesheet" href="{% static 'css/font-awesome-pro.css' %}">
     <link rel="stylesheet" href="{% static 'css/default.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -142,6 +144,7 @@
     </main>
     <!-- footer-start -->
     {%include 'includes/footer.html'%}
+    {% block script %}{%endblock%}
 
     <!-- footer-end -->
 

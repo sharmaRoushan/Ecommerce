@@ -1,0 +1,88 @@
+{%extends 'base.html'%}
+{%load static%}
+{% block content %}
+<div class="page-banner-area page-banner-height-2" data-background="{% static 'img/banner/down.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="page-banner-content text-center">
+                    <!-- <h4 class="breadcrumb-title">Password Reset</h4> -->
+                    <div class="breadcrumb-two">
+                        <nav>
+                            <nav class="breadcrumb-trail breadcrumbs">
+                                <ul class="breadcrumb-menu">
+                                    <li class="breadcrumb-trail">
+                                        <a href="{%url 'index'%}"><span>Home</span></a>
+                                    </li>
+                                    <li class="trail-item">
+                                        <span>My account</span>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="account-area mt-70 mb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="basic-login mb-50">
+                    <h5>Update Your Profile</h5>
+                    <form action="{% url 'update' %}" method="post">
+                        {%csrf_token%}
+                        {% if messages %}
+                        {%for message in messages%}
+                        {%if message.tags == 'success' %}
+                        <div class="alert alert-success" role="alert">
+                            {{message}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {%endif%}
+                        {%endfor%}
+                        {%endif%}
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="basic-login mb-50">
+                                    <label for="name">First Name<span>*</span></label>
+                                    <input id="name" type="text" placeholder="Enter Username" name="first_name" value="{{user.first_name}}">
+                                    <label for="pass">Username<span>*</span></label>
+                                    <input id="pass" type="text" placeholder="Enter password" name="username" value="{{user.username}}">
+                                    <label for="pass">Password<span>*</span></label>
+                                    <input id="pass" type="password" placeholder="Fil only if You change password" name="password">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="basic-login">
+                                <label for="name">Last Name<span>*</span></label>
+                                <input id="name" type="text" placeholder="Last name" name="last_name" value="{{user.last_name}}">
+                                <label for="pass">Email<span>*</span></label>
+                                <input id="pass" type="email" placeholder="Enter Email" name="email" value="{{user.email}}">
+                                </div>
+                            </div>
+
+                            <div class="row d-flex">
+                                <div class="col-6">
+                                    <button   type="submit" class="btn btn-warning w-100">UPDATE PROFILE</button>
+                                </div>
+
+                                <div class="col-6">
+                                    <a href="{% url 'logout' %}" class="btn btn-danger w-100" rounded>LOGOUT</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock%}

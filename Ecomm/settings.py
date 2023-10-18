@@ -136,10 +136,13 @@ CKEDITOR_CONFIGS = {
 }
 
 #  SMPT server 
-LOGIN_REDIRECT_URL='index'
-LOGOUT_REDIRECT_URL='index'
-EMAIL_USE_TLS = True
-EMAIL_HOST='smpt.gmail.com'
-EMAIL_PORT=587
-EMAIL_HOST_USER='ks1352498@gmail.com'
-EMAIL_HOST_PASSWORD='abpi ftnw abfo fopv'
+# LOGIN_REDIRECT_URL='index'
+# LOGOUT_REDIRECT_URL='index'
+# EMAIL_USE_TLS = True
+# EMAIL_HOST='smpt.gmail.com'
+# EMAIL_PORT=587
+# EMAIL_HOST_USER='ks1352498@gmail.com'
+# EMAIL_HOST_PASSWORD='abpi ftnw abfo fopv'
+
+# How to configure SMTP in Django?
+# Django SMTP Config on localhost

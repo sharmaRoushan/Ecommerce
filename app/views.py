@@ -1,14 +1,13 @@
 from django.shortcuts import render,redirect
-from app.models import slider,banner_area,MainCategory,Product
+from django.contrib.auth.decorators import login_required
+from app.models import slider,banner_area,MainCategory,Product,Category
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 
 
-
 def base(request):
     return render(request,'base.html')
-
 
 
 def index(request):
@@ -26,7 +25,6 @@ def index(request):
     }
     # print(context)
     return render(request,'main/index.html',context)
-
 def single_product(request,slug):
     product=Product.objects.filter(slug=slug)
     if product.exists():
@@ -40,11 +38,10 @@ def single_product(request,slug):
     return render(request,'product/product_detail.html',context)
 def Error404(request):
     return render(request,'errors/404.html')
-
 def account(request):
     return render(request,'authentication/account.html')
 
-
+@login_required(login_url='/login/')
 def register(request):
     if request.method == "POST":
         username=request.POST.get('username')
@@ -64,7 +61,6 @@ def register(request):
         user.set_password(password)
         user.save()
     return redirect('login')
-
 def login_page(request):
     if request.method=="POST":
         username=request.POST.get('username')
@@ -77,3 +73,52 @@ def login_page(request):
             message=messages.error(request,'Email and Password are invalid')
             return redirect('login')   
     return redirect('login')
+@login_required(login_url='/accounts/login/')
+def profile_logout(request):
+    return render(request,'profile/profile.html')
+
+@login_required(login_url='/accounts/login/')
+def update_profile(request):
+    if request.method == "POST":
+        username=request.POST.get('username')
+        first_name=request.POST['first_name']
+        last_name=request.POST['last_name']
+        email=request.POST['email']
+        password=request.POST.get('password')
+        user_id=request.user.id
+        user=User.objects.get(id=user_id)
+        user.first_name=first_name
+        user.last_name=last_name
+        user.email=email
+        user.username=username
+        if password!=None and password !="":
+            user.set_password(password)
+        user.save()
+        message=messages.success(request,'Profile are update successfully')
+    return redirect('profile')
+def Logout(request):
+    logout(request)
+    return redirect('index')
+def aboutus(request):
+    return render(request,'main/about.html')
+def contact(request):
+    return render(request,'main/contact.html')
+def all_product(request):
+    category=Category.objects.all()
+    product=Product.objects.all()
+    context={
+        'category':category,
+        'product':product,
+    }
+    return render(request,'product/product.html',context)
+def filter_data(request):
+    categories=request.GET.getlist('category[]')
+    brands=request.GET.getlist('brand[]')
+    allProducts=Product.objects.all().order_by('-id').distinct()
+    # print(allProducts)
+    if len(categories)>0:
+        allProducts=allProducts.filter(Categories__id__in=categories).distinct()
+    if len (brands)>0:
+        allProducts=allProducts.filter(Brand__id_in=brands).distinct()
+    t=render_to_string('ajax/product.html',{'product':allProducts})
+    return JsonResponse({'data':t})
