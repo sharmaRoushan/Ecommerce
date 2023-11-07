@@ -1,3 +1,7 @@
+{% load static %}
+{% if product|length < 1 %}
+<img src="{% static 'img/notfond.jpg' %}" style="height: 400px;">
+{%else%}
 {% for i in product %}
 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
 
@@ -45,7 +49,7 @@
         <div class="product__add-cart-s text-center">
             <button type="button"
                 class="cart-btn d-flex mb-10 align-items-center justify-content-center w-100">
-                Add to Cart
+                This is something
             </button>
             <button type="button"
                 class="wc-checkout d-flex align-items-center justify-content-center w-100"
@@ -56,3 +60,5 @@
     </div>
 </div>
 {%endfor%}
+
+{%endif%}

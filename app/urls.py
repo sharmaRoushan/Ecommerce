@@ -15,7 +15,7 @@ urlpatterns = [
     path('account/profile',views.profile_logout,name='profile'),
     path('account/profile/update',views.update_profile,name='update'),
     path('logout/profile',views.Logout,name='logout'),
-    path('product/filter-data',views.filter_data,name='filter-data'),
+    path('filter-data',views.filter_data,name='filter-data'),
     #  forgot password link
     path('accounts/',include('django.contrib.auth.urls')),
     path('about',views.aboutus,name='about'),

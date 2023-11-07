@@ -4,6 +4,8 @@ from app.models import slider,banner_area,MainCategory,Product,Category
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
+from django.template.loader import render_to_string
+from django.http import JsonResponse
 
 
 def base(request):
@@ -31,7 +33,6 @@ def single_product(request,slug):
         product=Product.objects.get(slug=slug)
     else:
         return redirect ('404')
-
     context={
        'product':product, 
     }
@@ -41,7 +42,7 @@ def Error404(request):
 def account(request):
     return render(request,'authentication/account.html')
 
-@login_required(login_url='/login/')
+@login_required(login_url='login')
 def register(request):
     if request.method == "POST":
         username=request.POST.get('username')
@@ -73,11 +74,11 @@ def login_page(request):
             message=messages.error(request,'Email and Password are invalid')
             return redirect('login')   
     return redirect('login')
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login')
 def profile_logout(request):
     return render(request,'profile/profile.html')
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login')
 def update_profile(request):
     if request.method == "POST":
         username=request.POST.get('username')
@@ -117,8 +118,8 @@ def filter_data(request):
     allProducts=Product.objects.all().order_by('-id').distinct()
     # print(allProducts)
     if len(categories)>0:
-        allProducts=allProducts.filter(Categories__id__in=categories).distinct()
-    if len (brands)>0:
+        allProducts=allProducts.filter(category_id__in=categories).distinct()
+    if len(brands)>0:
         allProducts=allProducts.filter(Brand__id_in=brands).distinct()
     t=render_to_string('ajax/product.html',{'product':allProducts})
     return JsonResponse({'data':t})
